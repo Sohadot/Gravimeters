@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cg6",
+    "model": "CG-6 Autograv",
+    "manufacturer": "Micro-g LaCoste / Scintrex",
+    "measurement": "Relative",
+    "principle": "Quartz-based sensor",
+    "deployment": "Land / portable surveys",
+    "description": "A land gravity meter described by its manufacturer as using quartz sensor technology, with field mapping and post-processing support.",
+    "source_url": "https://microglacoste.com/product/cg-6-autograv-gravity-meter/",
+    "source_label": "Manufacturer product page",
+    "reviewed_at": "2026-11-21"
+  },
+  {
+    "id": "fg5x",
+    "model": "FG5-X",
+    "manufacturer": "Micro-g LaCoste",
+    "measurement": "Absolute",
+    "principle": "Free-fall interferometry",
+    "deployment": "Stationary precision measurement / field campaigns",
+    "description": "A free-fall absolute gravimeter with an interferometric measurement system, described in the manufacturer's technical documentation.",
+    "source_url": "https://microglacoste.com/product/fg5-x-absolute-gravimeter/",
+    "source_label": "Manufacturer product page",
+    "reviewed_at": "2026-11-21"
+  },
+  {
+    "id": "aqg",
+    "model": "Absolute Quantum Gravimeter (AQG)",
+    "manufacturer": "Exail",
+    "measurement": "Absolute",
+    "principle": "Cold-atom interferometry",
+    "deployment": "Stationary / field-capable configurations",
+    "description": "A family of absolute quantum gravimeters using cold atoms; operating configuration and application depend on the specific AQG variant.",
+    "source_url": "https://www.exail.com/product/quantum-gravimeters",
+    "source_label": "Manufacturer product-family page",
+    "reviewed_at": "2026-11-21"
+  }
+]

@@ -1,0 +1,10 @@
+# Gravimeters.com
+
+Independent guide to gravity measurement instruments and published evidence.
+Primary sources are linked from each instrument and evidence entry.
+
+- https://gravimeters.com/ : Site thesis and scope
+- https://gravimeters.com/instruments/ : Source-linked instrument atlas
+- https://gravimeters.com/navigation/ : Gravity-aided navigation evidence log
+
+Editorial limits: No equipment certification, no independent testing of listed products, no claim that gravity sensors alone replace GNSS. Acquisition inquiries are separate from editorial coverage.
