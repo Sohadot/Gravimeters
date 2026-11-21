@@ -36,26 +36,37 @@ def load_records(name: str, required: set[str]) -> list[dict]:
 def build() -> None:
     instruments = load_records('instruments.json', {'id', 'model', 'manufacturer', 'measurement', 'principle', 'description', 'source_url', 'reviewed_at'})
     evidence = load_records('evidence.json', {'id', 'title', 'source_type', 'source_url', 'claim', 'boundary', 'reviewed_at'})
+    # Public links are owner-editable, but must not fabricate a future DOI.
+    links = json.loads((ROOT / 'data' / 'links.json').read_text(encoding='utf-8'))
+    if links.get('github_repository_url') != 'https://github.com/Sohadot/Gravimeters':
+        raise ValueError('Unexpected GitHub source location')
+    doi_url = links.get('zenodo_record_url')
+    if doi_url is not None and not (isinstance(doi_url, str) and
+                                    (doi_url.startswith('https://zenodo.org/records/') or
+                                     doi_url.startswith('https://doi.org/10.5281/zenodo.'))):
+        raise ValueError('Zenodo link must be null until a published verified record exists')
     env = Environment(loader=FileSystemLoader(ROOT / 'templates'), autoescape=select_autoescape(['html']))
     template = env.get_template('site.html')
     pages = {
-        'home': ('/', 'Satellite signals can be jammed. Gravity can’t. | Gravimeters', 'An independent atlas of gravity measurement instruments and primary-source evidence; explore the limits of gravity-aided navigation.'),
-        'instruments': ('/instruments/', 'Gravity instrument atlas | Gravimeters', 'Source-linked examples across relative, absolute and quantum gravimetry.'),
-        'navigation': ('/navigation/', 'Gravity-aided navigation evidence | Gravimeters', 'Source-level evidence about GNSS-independent gravity-assisted navigation, including its limitations.'),
+        'home': ('/', 'Satellite signals can be jammed. Gravity can’t. | Gravimeters', 'An independent atlas of gravity measurement instruments and primary-source evidence; explore the limits of gravity-aided navigation.', 'og-home.jpg'),
+        'instruments': ('/instruments/', 'Gravity instrument atlas | Gravimeters', 'Source-linked examples across relative, absolute and quantum gravimetry.', 'og-instruments.jpg'),
+        'navigation': ('/navigation/', 'Gravity-aided navigation evidence | Gravimeters', 'Source-level evidence about GNSS-independent gravity-assisted navigation, including its limitations.', 'og-navigation.jpg'),
+        'acquisition': ('/acquisition/', 'Strategic acquisition and verifiable transfer | Gravimeters', 'Explore an independently maintained gravity-instrument reference asset and a transparent, optional third-party escrow transaction process.', 'og-acquisition.jpg'),
     }
     OUT.mkdir(exist_ok=True)
-    for key, (route, title, description) in pages.items():
+    for key, (route, title, description, social_image) in pages.items():
         dest = OUT / route.strip('/') / 'index.html' if route != '/' else OUT / 'index.html'
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(template.render(page=key, route=route, title=title, description=description,
-                                        canonical=CANONICAL + route, instruments=instruments, evidence=evidence,
+                                        canonical=CANONICAL + route, social_image=CANONICAL + '/assets/' + social_image,
+                                        links=links, instruments=instruments, evidence=evidence,
                                         contact='agent@sohadot.com', year=date.today().year), encoding='utf-8')
     for path in (ROOT / 'static').rglob('*'):
         if path.is_file():
             target = OUT / path.relative_to(ROOT / 'static')
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(path.read_bytes())
-    (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{CANONICAL}{route}</loc></url>' for route, _, _ in pages.values()) + '</urlset>\n', encoding='utf-8')
+    (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{CANONICAL}{route}</loc></url>' for route, _, _, _ in pages.values()) + '</urlset>\n', encoding='utf-8')
     print(f'Built {len(pages)} routes; {len(instruments)} instruments; {len(evidence)} evidence records.')
 
 
