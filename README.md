@@ -23,13 +23,13 @@ Current contact CTA uses `agent@sohadot.com`, provided by the owner but **not ye
 
 ## Publishing gate
 
-**No merge of PR #1 and no initial deployment without explicit owner approval.** **Publishing doctrine:** GitHub is the canonical development, review, CI and publication platform. The intended public hosting target is **GitHub Pages**, using the tested static output from `dist/` and an owner-approved publication workflow. **Cloudflare is the separate DNS/nameserver, proxy/security and TLS layer**, not the source of truth or the primary deployment host. Configure `gravimeters.com` as a GitHub Pages custom domain and verify GitHub's HTTPS/domain state before applying Cloudflare DNS/proxy settings. No Cloudflare Pages deployment is authorized. Development and evidence review are not affiliation or endorsement by any manufacturer.
+**No merge of PR #1 and no initial deployment without explicit owner approval.** **Publishing doctrine:** GitHub is the canonical development, review, CI and publication platform. The intended public hosting target is **GitHub Pages**, using the tested static output from `dist/` and an owner-approved publication workflow. **Cloudflare is the separate NS/DNS, proxy/security and TLS layer**, not the source of truth or the primary deployment host. Configure `gravimeters.com` as a GitHub Pages custom domain and verify HTTPS/domain state before applying Cloudflare DNS/proxy settings. No Cloudflare Pages deployment is authorized. Development and evidence review are not affiliation or endorsement by any manufacturer.
 
 ## Acquisition, verification and share previews
 
 - `data/links.json` contains the verified public GitHub URL and a `null` Zenodo record URL until an actual dataset release exists. A reserved draft DOI is **not** a public citable record. When a Zenodo record is published, insert its exact verified HTTPS URL in `zenodo_record_url`; the acquisition page automatically links to it.
 - The acquisition route describes an **optional** independent escrow procedure, not an active transaction, provider partnership, existing escrow account or guaranteed transfer. A buyer and seller must separately agree to the terms, settlement service, asset scope and fees.
-- Four 1200 × 630 original JPEG share images are available in `static/assets/og-*.png`; HTML includes per-page Open Graph and X image metadata. On an actual deployment, test their absolute HTTPS URLs and the rendered previews using platform share-debuggers. The local build alone cannot prove platform cache behavior.
+- Four 1200 × 630 original JPEG share images are available in `static/assets/og-*.jpg`; HTML includes per-page Open Graph and X image metadata. On an actual deployment, test their absolute HTTPS URLs and the rendered previews using platform share-debuggers. The local build alone cannot prove platform cache behavior.
 - A non-deploy helper `scripts/render_social_assets.py` can regenerate the images from the project-created `social-field-source.jpg` with Pillow and local fonts; it is not a build dependency.
 - `agent@sohadot.com` is owner-provided but not yet verified for incoming mail. No sale, referral, broker or escrow agreement is implied.
 
@@ -37,11 +37,12 @@ Current contact CTA uses `agent@sohadot.com`, provided by the owner but **not ye
 
 ## GitHub-first deployment order (owner-gated)
 
-1. Complete visual, editorial, accessibility and link review within this PR. CI does not publish.
-2. Obtain the owner's **explicit approval** to merge PR #1 and to carry out the initial public release.
-3. Configure a GitHub Actions → GitHub Pages publication from the approved `main` revision, taking `dist/` from `python scripts/build.py` (do not publish source data, internal files, or repository root as a substitute).
-4. Attach the custom domain `gravimeters.com` to GitHub Pages, using the domain's documented verification and DNS records; avoid DNS cutover until the site serves correctly and TLS is verified.
-5. Delegate the domain's authoritative nameservers to Cloudflare only after reviewing existing DNS/email records. Configure DNS and applicable proxied protection, TLS/SSL modes and cache rules for a GitHub Pages origin; **NS delegation alone is not protection**.
-6. Verify public HTTPS, canonical redirects, all four routes, social preview image URLs, `robots.txt`/sitemap and contact email delivery. Publish DOI links only after a real Zenodo record exists.
+1. Complete visual, editorial, accessibility and link review in the PR. Pull-request CI never deploys.
+2. Obtain the owner's explicit approval before merging PR #1 and before the first public release.
+3. Configure the repository's **Pages publishing source = GitHub Actions**; establish a protected `github-pages` environment where supported.
+4. The separate `Publish approved site to GitHub Pages` workflow uses **manual dispatch on `main` only**, runs the offline tests, uploads only `dist/` and deploys to GitHub Pages. No push, pull request or CI success automatically publishes.
+5. Add the custom domain `gravimeters.com` to GitHub Pages settings **before changing DNS**, and validate domain ownership and GitHub Pages HTTPS. Follow verified current DNS instructions for the apex and `www`; do not switch production DNS without approval.
+6. Set up Cloudflare NS/DNS and applicable protection **as a secondary layer**, preserving existing mail/MX records. DNS delegation by itself is not protection; verify TLS and proxy compatibility with the GitHub Pages origin.
+7. Check HTTPS, redirects, all four routes, source links, JPG social previews, robots, sitemap and actual contact-email delivery after the authorized launch.
 
-**Hard rule:** GitHub Pages owns publication; Cloudflare supplements routing and protection. Neither a successful PR check nor the use of Cloudflare NS grants permission to merge, deploy, change nameservers or enable email routing.
+Neither a passing PR check nor the presence of this deployment workflow permits merging, running production deployment, switching NS or sending outreach.

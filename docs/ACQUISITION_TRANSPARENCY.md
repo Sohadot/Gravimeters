@@ -19,3 +19,9 @@ Official public background: https://www.escrow.com/domains/how-it-works
 Public code can be inspected at https://github.com/Sohadot/Gravimeters. Scientific source links and dates are provided with instrument and evidence records, and are descriptive rather than certifications. A future Zenodo DOI may help preserve and cite a released classification/evidence snapshot; no DOI is asserted until publication and verification.
 
 Confidential inquiries: agent@sohadot.com (owner-provided address; live delivery test pending).
+
+## Evidence of publication and transfer readiness
+
+The public GitHub repository provides version history and repeatable static-site builds. It does **not** prove domain ownership, registrar transfer eligibility, ownership of third-party intellectual property, legal title to all website assets, or any buyer's purchase rights. Those matters are checked privately during diligence and in the written transaction schedule.
+
+A DOI, when eventually published, identifies a scholarly/data record, not a guarantee of technical accuracy or a financial valuation. No DOI or escrow transaction is claimed to exist at this launch stage.

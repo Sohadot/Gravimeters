@@ -1,0 +1,45 @@
+name: Publish approved site to GitHub Pages
+
+# Deliberately manual: an approved PR/merge is not itself permission to deploy.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: github-pages-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned build dependency
+        run: python -m pip install -r requirements.txt
+      - name: Build and run pre-publication smoke tests
+        run: python scripts/smoke_test.py
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload generated public site ONLY
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
@@ -53,6 +54,9 @@ def build() -> None:
         'navigation': ('/navigation/', 'Gravity-aided navigation evidence | Gravimeters', 'Source-level evidence about GNSS-independent gravity-assisted navigation, including its limitations.', 'og-navigation.jpg'),
         'acquisition': ('/acquisition/', 'Strategic acquisition and verifiable transfer | Gravimeters', 'Explore an independently maintained gravity-instrument reference asset and a transparent, optional third-party escrow transaction process.', 'og-acquisition.jpg'),
     }
+    # A clean output prevents stale routes or social assets from being deployed.
+    if OUT.exists():
+        shutil.rmtree(OUT)
     OUT.mkdir(exist_ok=True)
     for key, (route, title, description, social_image) in pages.items():
         dest = OUT / route.strip('/') / 'index.html' if route != '/' else OUT / 'index.html'

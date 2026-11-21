@@ -34,3 +34,19 @@
 .provenance-strip{display:flex;gap:30px;border-top:1px solid #294650;margin-top:36px;padding-top:20px;font:.69rem 'DM Mono',monospace;letter-spacing:.01em;color:#9db8bd;flex-wrap:wrap}.provenance-strip strong{color:var(--signal);font-weight:400;padding-right:8px}
 @media(max-width:1000px){.acquisition-hero{grid-template-columns:1fr}.acquisition-seal{min-height:300px}.asset-ledger{grid-template-columns:1fr}.asset-ledger>div,.asset-ledger>div+div{padding:20px 0;border-right:0;border-bottom:1px solid #2b4951}.asset-ledger>div:last-child{border-bottom:0}.process-chain{grid-template-columns:1fr;border-left:2px solid #6c999a;border-top:0;padding-left:20px}.process-chain li,.process-chain li+li{padding:6px 0 20px 17px;border-right:0;border-bottom:1px solid #b3c8c4}.process-chain li:before,.process-chain li+li:before{top:12px;left:-28px}.process-chain li:last-child{border-bottom:0}}
 @media(max-width:700px){.acquisition-hero{padding-top:53px;padding-bottom:50px;gap:25px}.acquisition-hero h1{font-size:clamp(3.4rem,12vw,5rem)}.acquisition-seal{min-height:290px}.seal-glyph{font-size:130px}.process-section{padding:64px 0}.verification-rail{grid-template-columns:1fr}.verification-rail>div,.verification-rail>div+div{padding:25px 0;border-left:0}.verification-rail>div+div{border-top:1px solid #4a6870}.verification-rail p{min-height:0}.provenance-strip{gap:12px}.asset-ledger strong{font-size:1.7rem}}
+/* 2026-11-21 concept-first visual refinement: gravity relief is an illustrative artwork. */
+.field{
+  isolation:isolate;
+  background:
+    linear-gradient(100deg,rgba(4,20,29,.38) 0%,rgba(5,23,31,.12) 61%,rgba(5,18,24,.23) 100%),
+    url('/assets/social-field-source.jpg') center / cover no-repeat,
+    #081b26;
+  box-shadow:inset 0 0 0 1px rgba(136,229,211,.10),0 22px 75px rgba(0,0,0,.18);
+}
+.field-grid{opacity:.42;background-size:42px 42px}
+.field .orbit{opacity:.12;pointer-events:none}
+.field .axis-h,.field .axis-v{opacity:.32}
+.field .core{background:rgba(5,33,43,.78);backdrop-filter:blur(8px);box-shadow:0 0 0 12px rgba(8,50,57,.18),0 0 34px rgba(141,228,214,.25)}
+.field .data-point{background:rgba(5,24,32,.65);padding:7px 9px;border:1px solid rgba(141,228,214,.17);backdrop-filter:blur(5px)}
+.field-corner,.field-note{color:#c1d4d6;text-shadow:0 2px 6px #06161c}
+@media(max-width:700px){.field{background-position:59% center}.field .data-point{font-size:.52rem}}
