@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="{{ description }}">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="{{ canonical }}">
+  <link rel="stylesheet" href="/site.css">
+  <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gravimeters">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="https://gravimeters.com/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:image" content="https://gravimeters.com/assets/og.png">
+  <title>{{ title }}</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Gravimeters","url":"https://gravimeters.com/","description":"Independent source-linked instrument atlas and navigation evidence."}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="noise" aria-hidden="true"></div>
+<header class="site-header wrap">
+  <a class="brand" href="/" aria-label="Gravimeters home"><span class="brand-mark" aria-hidden="true">g</span><span>GRAVIMETERS<span class="brand-ext">.COM</span></span></a>
+  <nav aria-label="Primary navigation">
+    <a href="/" {% if page == 'home' %}aria-current="page"{% endif %}>Overview</a>
+    <a href="/instruments/" {% if page == 'instruments' %}aria-current="page"{% endif %}>Instruments</a>
+    <a href="/navigation/" {% if page == 'navigation' %}aria-current="page"{% endif %}>Navigation evidence</a>
+  </nav>
+  <a class="header-cta" href="/#acquisition">Acquisition <span aria-hidden="true">↗</span></a>
+</header>
+<main id="main">
+{% if page == 'home' %}
+<section class="hero wrap" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="signal" aria-hidden="true"></span> AN INDEPENDENT INSTRUMENT &amp; EVIDENCE ATLAS <span class="sequence">/ 001</span></p>
+    <h1 id="hero-title">Satellite signals<br>can be jammed.<br><em>Gravity can't.</em></h1>
+    <p class="lead">Explore the instruments that measure gravity — and the emerging science of using its patterns when satellite navigation cannot be relied upon.</p>
+    <p class="qualification">Earth's gravity is not a radio signal. Gravity-aided navigation still depends on reference maps, sensors, inertial systems and processing; it is not a universal replacement for GNSS.</p>
+    <div class="hero-actions"><a class="button primary" href="/instruments/">Explore instruments <span aria-hidden="true">↗</span></a><a class="button ghost" href="/navigation/">Examine the evidence <span aria-hidden="true">→</span></a></div>
+  </div>
+  <div class="field" role="img" aria-label="Conceptual gravity measurement field: concentric reference contours connect a measured field to instrument and navigation evidence. Not a scientific chart.">
+    <div class="field-corner top-left">FIELD / GVM-001</div><div class="field-corner top-right">REFERENCE 01</div>
+    <div class="field-grid" aria-hidden="true"></div><div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div><div class="orbit orbit-three" aria-hidden="true"></div><div class="orbit orbit-four" aria-hidden="true"></div>
+    <div class="axis-h" aria-hidden="true"></div><div class="axis-v" aria-hidden="true"></div><div class="core" aria-hidden="true">g</div>
+    <div class="data-point p1" aria-hidden="true"><span class="dot"></span> SENSOR INPUT</div><div class="data-point p2" aria-hidden="true"><span class="dot"></span> REFERENCE MAP</div><div class="data-point p3" aria-hidden="true"><span class="dot"></span> INERTIAL AID</div>
+    <div class="field-note">ILLUSTRATIVE / NOT MEASUREMENT DATA</div>
+  </div>
+  <div class="hero-index"><span>01 / INSTRUMENTS</span><span>02 / APPLICATIONS</span><span>03 / PROVENANCE</span></div>
+</section>
+<section class="section pale" id="scope"><div class="wrap"><div class="section-intro"><p class="eyebrow">THE SCOPE</p><h2>One instrument category.<br><em>Many critical applications.</em></h2><p>Gravimeters is plural by design. Relative, absolute and quantum instruments belong to a wider measurement ecosystem, not a single product family.</p></div>
+<div class="scope-grid"><article><span class="count">01</span><h3>Gravity measurement</h3><p>Instrument classes, principles and conditions anchored to original manufacturer documentation.</p></article><article><span class="count">02</span><h3>Navigation resilience</h3><p>Careful examination of publicly reported gravity-aided navigation — including experimental constraints.</p></article><article><span class="count">03</span><h3>Instrument decisions</h3><p>Source-linked discovery, not fabricated equipment ratings, quotes or engineering certification.</p></article></div></div></section>
+<section class="section wrap" id="atlas-preview"><div class="section-head"><div><p class="eyebrow">ATLAS / OPEN ENTRIES</p><h2>Named instruments.<br><em>Traceable sources.</em></h2></div><a class="inline-link" href="/instruments/">View the atlas <span aria-hidden="true">↗</span></a></div>
+<div class="instrument-grid">{% for item in instruments %}<article class="instrument-card"><div class="card-overline"><span>GVM / {{ '%02d'|format(loop.index) }}</span><span>{{ item.measurement }}</span></div><h3>{{ item.model }}</h3><p class="maker">{{ item.manufacturer }}</p><dl><div><dt>Principle</dt><dd>{{ item.principle }}</dd></div><div><dt>Deployment</dt><dd>{{ item.deployment }}</dd></div></dl><a class="source-link" href="{{ item.source_url }}" target="_blank" rel="noopener noreferrer">Original source <span aria-hidden="true">↗</span></a></article>{% endfor %}</div><p class="after-grid">Entries summarize public product descriptions, not independent product tests or purchasing recommendations.</p></section>
+<section class="feature"><div class="wrap feature-inner"><div><p class="eyebrow">NAVIGATION / EVIDENCE DESK</p><h2>What the trials <em>actually</em> show.</h2><p>A 2026 maritime experiment reported GNSS-independent gravity-map matching. Its results cannot be generalized to every route, vehicle or gravimeter.</p><a class="button ghost light" href="/navigation/">Review the source and limits <span aria-hidden="true">↗</span></a></div><div class="evidence-stamp"><span>DOCUMENT TYPE</span><strong>PREPRINT</strong><span>PUBLIC SOURCE / 2026</span><div class="stamp-divider"></div><span>EVIDENCE IS NOT ENDORSEMENT</span></div></div></section>
+<section class="section wrap acquisition" id="acquisition"><div class="acquisition-label"><p class="eyebrow">OWNERSHIP &amp; OPPORTUNITY</p><span class="acq-status">Strategic inquiries welcome</span></div><h2>A category name.<br><em>A developing reference asset.</em></h2><p>Gravimeters.com is available for confidential strategic acquisition discussions. We also welcome relevant institutional and supplier conversations. Editorial inclusion does not imply a commercial relationship.</p><div class="acq-actions"><a class="button primary" href="mailto:{{ contact }}?subject=Gravimeters.com%20strategic%20acquisition%20inquiry">Discuss acquisition <span aria-hidden="true">↗</span></a><a class="button ghost" href="mailto:{{ contact }}?subject=Gravimeters.com%20institutional%20inquiry">Institutional inquiry <span aria-hidden="true">→</span></a></div><p class="fine">Contact: <a href="mailto:{{ contact }}">{{ contact }}</a>. Email-based contact only; no supplier referral agreement is claimed. No public asking price.</p></section>
+{% elif page == 'instruments' %}
+<section class="subhero wrap"><p class="eyebrow">INSTRUMENT ATLAS / EDITION 001</p><h1>Discover the <em>instruments.</em><br>Inspect the sources.</h1><p class="lead">A deliberately small, independently organized set of documented gravimeters. Measurement mode, sensing principle and deployment are different classification axes.</p></section>
+<section class="section wrap compact"><div class="taxonomy"><span>MEASUREMENT <strong>Absolute / Relative</strong></span><span>PRINCIPLE <strong>Quartz / Free fall / Cold atoms</strong></span><span>DOMAIN <strong>Land / Precision / Field</strong></span></div><div class="instrument-grid">{% for item in instruments %}<article class="instrument-card detailed"><div class="card-overline"><span>ENTRY / {{ '%02d'|format(loop.index) }}</span><span>Source-linked</span></div><h2>{{ item.model }}</h2><p class="maker">{{ item.manufacturer }}</p><p>{{ item.description }}</p><dl><div><dt>Measurement</dt><dd>{{ item.measurement }}</dd></div><div><dt>Principle</dt><dd>{{ item.principle }}</dd></div><div><dt>Deployment</dt><dd>{{ item.deployment }}</dd></div><div><dt>Source reviewed</dt><dd>{{ item.reviewed_at }}</dd></div></dl><a class="source-link" href="{{ item.source_url }}" target="_blank" rel="noopener noreferrer">{{ item.source_label }} <span aria-hidden="true">↗</span></a></article>{% endfor %}</div><div class="note-block"><h2>Classification, not endorsement.</h2><p>Gravimeters measure gravity; gravity gradiometers measure spatial gradients. These categories are not interchangeable. No listed instrument is claimed to deliver satellite-free navigation on its own. All information should be checked with the manufacturer before procurement.</p><a class="inline-link" href="mailto:{{ contact }}?subject=Gravimeters.com%20instrument%20correction">Request a factual correction ↗</a></div></section>
+{% elif page == 'navigation' %}
+<section class="subhero wrap"><p class="eyebrow">NAVIGATION EVIDENCE / EDITION 001</p><h1>Gravity does not<br><em>broadcast a position.</em></h1><p class="lead">Its spatial variations can help constrain navigation when measured against reference maps and integrated with inertial systems. We summarize public evidence, not an independent engineering test.</p></section>
+<section class="section wrap compact"><div class="method-steps"><div><span>01</span><h2>Measure</h2><p>Onboard sensors collect gravity observations.</p></div><div><span>02</span><h2>Match</h2><p>Processing relates measurements to reference gravity maps.</p></div><div><span>03</span><h2>Constrain</h2><p>The result can help constrain a navigation solution, subject to noise, map quality and conditions.</p></div></div><div class="section-head"><div><p class="eyebrow">PRIMARY-SOURCE LOG</p><h2>The reported evidence.</h2></div></div>
+{% for item in evidence %}<article class="evidence-record"><div><span class="evidence-kind">{{ item.source_type }}</span><h3>{{ item.title }}</h3><p class="record-date">Published {{ item.published_at }} · Reviewed {{ item.reviewed_at }}</p></div><div class="record-body"><h4>What the source reports</h4><p>{{ item.claim }}</p><h4>Critical boundary</h4><p>{{ item.boundary }}</p><a class="source-link" href="{{ item.source_url }}" target="_blank" rel="noopener noreferrer">Read original paper <span aria-hidden="true">↗</span></a></div></article>{% endfor %}
+<div class="note-block"><h2>No universal GNSS substitute is claimed.</h2><p>Gravity itself is not an RF signal; systems using it remain subject to imperfect sensing, map availability, computation and operating environment. Preprints are labelled as preprints; they are not presented as independently validated product certifications.</p></div></section>
+{% endif %}
+</main>
+<footer class="footer"><div class="wrap footer-grid"><div><a class="brand footer-brand" href="/"><span class="brand-mark" aria-hidden="true">g</span><span>GRAVIMETERS.COM</span></a><p>An independent atlas of gravity measurement instruments and published evidence.</p></div><div><span class="footer-label">EXPLORE</span><a href="/instruments/">Instruments</a><a href="/navigation/">Navigation evidence</a><a href="/#acquisition">Acquisition</a></div><div><span class="footer-label">EDITORIAL</span><p>Sources remain with their original publishers. No supplier affiliation, engineering certification, or paid ranking is implied.</p><a href="mailto:{{ contact }}?subject=Gravimeters.com%20correction">Corrections ↗</a></div></div><div class="wrap footer-bottom"><span>© {{ year }} Gravimeters.com</span><span>Independence is a method, not a slogan.</span></div></footer>
+</body></html>

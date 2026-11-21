@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#07151d"/>
+<g fill="none" stroke="#398da0" opacity=".4"><ellipse cx="890" cy="312" rx="245" ry="245"/><ellipse cx="890" cy="312" rx="184" ry="184"/><ellipse cx="890" cy="312" rx="120" ry="120"/><path d="M600 312h580M890 26v575"/></g>
+<circle cx="890" cy="312" r="32" fill="#86e3d5"/>
+<text x="70" y="100" fill="#8de4dc" font-family="Arial,sans-serif" font-weight="bold" font-size="28" letter-spacing="7">GRAVIMETERS.COM</text>
+<text x="70" y="260" fill="#f4f6f4" font-family="Georgia,serif" font-size="70">Satellite signals</text>
+<text x="70" y="340" fill="#f4f6f4" font-family="Georgia,serif" font-size="70">can be jammed.</text>
+<text x="70" y="426" fill="#8de4dc" font-family="Georgia,serif" font-size="71">Gravity can't.</text>
+<text x="70" y="550" fill="#a4b7bd" font-family="Arial,sans-serif" font-size="24">INSTRUMENTS  /  EVIDENCE  /  NAVIGATION</text>
+</svg>

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "qctrl-2026-field-trial",
+    "title": "GNSS-free gravity-aided navigation in a maritime field trial",
+    "source_type": "Research preprint, not yet treated as peer-reviewed",
+    "source_title": "GNSS-free quantum gravity-aided navigation and fine-scale marine surveying with a strapdown quantum gravimeter",
+    "source_url": "https://arxiv.org/abs/2608.25563",
+    "published_at": "2026-08-26",
+    "claim": "The authors report a maritime demonstration of gravity-map matching without GNSS observations in the evaluated navigation solution.",
+    "boundary": "The result relies on a quantum gravimeter, reference gravity maps, inertial navigation and processing. It does not establish that a gravimeter alone can replace GNSS in general.",
+    "reviewed_at": "2026-11-21"
+  }
+]
