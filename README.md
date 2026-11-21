@@ -23,7 +23,7 @@ Current contact CTA uses `agent@sohadot.com`, provided by the owner but **not ye
 
 ## Publishing gate
 
-**No merge of PR #1 and no initial deployment without explicit owner approval.** Planned host: Cloudflare Pages or a verified existing static hosting configuration. Development and evidence review are not affiliation or endorsement by any manufacturer.
+**No merge of PR #1 and no initial deployment without explicit owner approval.** **Publishing doctrine:** GitHub is the canonical development, review, CI and publication platform. The intended public hosting target is **GitHub Pages**, using the tested static output from `dist/` and an owner-approved publication workflow. **Cloudflare is the separate DNS/nameserver, proxy/security and TLS layer**, not the source of truth or the primary deployment host. Configure `gravimeters.com` as a GitHub Pages custom domain and verify GitHub's HTTPS/domain state before applying Cloudflare DNS/proxy settings. No Cloudflare Pages deployment is authorized. Development and evidence review are not affiliation or endorsement by any manufacturer.
 
 ## Acquisition, verification and share previews
 
@@ -34,3 +34,14 @@ Current contact CTA uses `agent@sohadot.com`, provided by the owner but **not ye
 - `agent@sohadot.com` is owner-provided but not yet verified for incoming mail. No sale, referral, broker or escrow agreement is implied.
 
 **Publication gate remains explicit owner approval before merging or deploying PR #1.**
+
+## GitHub-first deployment order (owner-gated)
+
+1. Complete visual, editorial, accessibility and link review within this PR. CI does not publish.
+2. Obtain the owner's **explicit approval** to merge PR #1 and to carry out the initial public release.
+3. Configure a GitHub Actions → GitHub Pages publication from the approved `main` revision, taking `dist/` from `python scripts/build.py` (do not publish source data, internal files, or repository root as a substitute).
+4. Attach the custom domain `gravimeters.com` to GitHub Pages, using the domain's documented verification and DNS records; avoid DNS cutover until the site serves correctly and TLS is verified.
+5. Delegate the domain's authoritative nameservers to Cloudflare only after reviewing existing DNS/email records. Configure DNS and applicable proxied protection, TLS/SSL modes and cache rules for a GitHub Pages origin; **NS delegation alone is not protection**.
+6. Verify public HTTPS, canonical redirects, all four routes, social preview image URLs, `robots.txt`/sitemap and contact email delivery. Publish DOI links only after a real Zenodo record exists.
+
+**Hard rule:** GitHub Pages owns publication; Cloudflare supplements routing and protection. Neither a successful PR check nor the use of Cloudflare NS grants permission to merge, deploy, change nameservers or enable email routing.
