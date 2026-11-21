@@ -1,6 +1,6 @@
 # Public release procedure — GitHub Pages first
 
-**Status: NOT DEPLOYED.** This document explains the GitHub-controlled publication workflow. It is not an authorization to publish.
+**Status: INAUGURAL RELEASE DEPLOYED on 2026-11-21** through [GitHub Actions](https://github.com/Sohadot/Gravimeters/actions/runs/44950422020). Owner-supplied browser screenshots show the intended homepage. This runbook governs later releases and unresolved public validation; it does not authorize automatic publication. Mail delivery, external OG crawler previews and the remaining page-by-page public HTTP checks are not yet independently confirmed.
 
 ## Governing architecture
 
@@ -8,9 +8,9 @@
 - **Cloudflare** is the separate domain NS/DNS, security, proxy (when compatible), caching and TLS layer. Never substitute Cloudflare Pages as the site host.
 - Internal management plans, private correspondence, registrar records, acquisition negotiations and secrets must stay out of the public repository and the `dist/` artifact.
 
-## Initial approval gate
+## Approval gate and release record
 
-Before first public release, the asset owner must explicitly authorize BOTH merging the inaugural public PR and deployment to GitHub Pages. A green test run is not sufficient. Subsequent technical releases follow applicable owner gates and editorial policy. Public navigation/evidence overhauls have a separate approval gate.
+The owner delegated ordinary technical project management; PR #1 was squash-merged and the initial site manually deployed through GitHub Pages on 2026-11-21. This historic release does not authorize automatic future publishing. Subsequent releases follow applicable owner gates and editorial policy; public navigation/evidence overhauls require a separate approval gate.
 
 ## Preflight checklist
 
