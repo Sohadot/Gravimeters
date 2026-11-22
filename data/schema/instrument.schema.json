@@ -75,7 +75,8 @@
         "quartz_sensor",
         "free_fall_interferometry",
         "cold_atom_interferometry",
-        "superconducting"
+        "superconducting",
+        "zero_length_spring"
       ]
     }
   },

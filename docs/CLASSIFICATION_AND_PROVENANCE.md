@@ -29,3 +29,11 @@ A demonstrated gravity-aided navigation result depends on sensor measurements, r
 - BGI international gravity reference: https://bgi.obs-mip.fr/international-gravity-reference-frame/
 
 No DOI or Zenodo publication is implied by this initial data export. DOI issuance awaits a rights-reviewed and materially reusable frozen release.
+
+## Comparison scope and interpretation (v0.2)
+
+The public matrix compares only documented **instrument model**, **measurement mode**, **sensing principle**, **deployment context**, and **original-source link**. It does not compare accuracy, cost, readiness, frequency response, calibration, performance or suitability, because primary sources do not describe those fields in a sufficiently harmonized manner. Different deployment contexts are not direct substitutes. A future technical comparison must cite each specification with conditions and source revision.
+
+Initial public example records and their source references are attributable to the original manufacturers, not to any endorsement of this project. The four v0.2 records are: Micro-g LaCoste A10, Micro-g LaCoste gPhoneX, GWR iGrav, and ZLS Burris. Their published source links and editorial-review date appear in the JSON export.
+
+**Evidence association boundary:** A quantum gravimeter employed in an external navigation experiment is not presumed to be the Exail AQG (or any other listed commercial instrument). Evidence-to-model links require documented hardware identification and an explicit citation. A link to an instrument **class** does not establish product-level performance.

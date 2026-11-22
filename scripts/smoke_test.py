@@ -72,9 +72,9 @@ assert 'workflow_dispatch:' in deploy and 'push:' not in deploy and 'pull_reques
 assert "github.ref == 'refs/heads/main'" in deploy
 assert 'path: dist' in deploy
 atlas = json.loads((OUT / 'data' / 'atlas.json').read_text(encoding='utf-8'))
-assert atlas['dataset_version'] == '0.1.0'
-assert len(atlas['instruments']) == 3 and len(atlas['navigation_evidence']) == 1
-assert {entry['id'] for entry in atlas['instruments']} == {'cg6', 'fg5x', 'aqg'}
+assert atlas['dataset_version'] == '0.2.0'
+assert len(atlas['instruments']) == 7 and len(atlas['navigation_evidence']) == 1
+assert {entry['id'] for entry in atlas['instruments']} == {'cg6', 'fg5x', 'aqg', 'a10', 'gphonex', 'igrav', 'burris'}
 assert {entry['measurement_type'] for entry in atlas['instruments']} == {'relative', 'absolute'}
 assert all(entry['sensing_family'] in atlas['taxonomy']['facets']['sensing_family'] for entry in atlas['instruments'])
 assert (OUT / 'data' / 'schema' / 'instrument.schema.json').is_file()
@@ -82,3 +82,13 @@ assert b'GRAVIMETERS_INTERNAL' not in (OUT / 'data' / 'atlas.json').read_bytes()
 instrument_page = (OUT / 'instruments' / 'index.html').read_text(encoding='utf-8')
 assert '/data/atlas.json' in instrument_page
 print('Static site and public atlas export tests passed.')
+
+# User-facing comparison must be source-linked, filterable and accessible as static HTML.
+page = (OUT / 'instruments' / 'index.html').read_text(encoding='utf-8')
+assert page.count('data-measurement=') == 14
+assert 'id="atlas-filter"' in page and 'id="visible-instrument-count"' in page
+assert 'role="region"' in page and '<table class="comparison-matrix"' in page
+assert 'https://www.gwrinstruments.com/igrav-gravity-sensors.html' in page
+assert (OUT / 'atlas-filter.js').exists()
+assert 'ranking' not in page.lower() or 'not a ranking' in page.lower()
+print('Sprint 4 atlas expansion/comparison checks passed.')
