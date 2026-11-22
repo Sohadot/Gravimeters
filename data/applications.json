@@ -1,0 +1,26 @@
+[
+  {
+    "id": "gnss-denied-navigation",
+    "title": "Navigation in GNSS-denied environments",
+    "summary": "Gravity-map matching as a supporting observation in integrated navigation research.",
+    "boundary": "Requires reference gravity maps, inertial navigation, calibration and processing. A gravity reading alone is not a position fix."
+  },
+  {
+    "id": "marine-gravity-surveying",
+    "title": "Marine gravity surveying",
+    "summary": "Observation of gravitational acceleration on moving marine platforms for survey and geophysical interpretation.",
+    "boundary": "Vessel motion, instrument calibration and corrections constrain measurement quality; surveying is not the same claim as GNSS-free positioning."
+  },
+  {
+    "id": "hybrid-geophysical-surveys",
+    "title": "Hybrid geophysical surveys",
+    "summary": "Combining relative field measurements with an absolute reference to build spatial gravity maps.",
+    "boundary": "A studied survey workflow does not establish interchangeable performance or procurement suitability for unrelated commercial instruments."
+  },
+  {
+    "id": "geodetic-gravity-reference",
+    "title": "Geodetic gravity reference networks",
+    "summary": "Establishment and transfer of reference gravity measurements across measured stations.",
+    "boundary": "A network study validates its documented design and procedure, not general station coverage, all gravimeter models or independent equipment certification."
+  }
+]

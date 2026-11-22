@@ -38,6 +38,7 @@ def load_records(name: str, required: set[str]) -> list[dict]:
 def build() -> None:
     instruments = load_records('instruments.json', {'id', 'model', 'manufacturer', 'measurement', 'principle', 'description', 'source_url', 'reviewed_at'})
     evidence = load_records('evidence.json', {'id', 'title', 'source_type', 'source_url', 'claim', 'boundary', 'reviewed_at'})
+    applications = json.loads((ROOT / 'data' / 'applications.json').read_text(encoding='utf-8'))
     taxonomy = json.loads((ROOT / 'data' / 'taxonomy.json').read_text(encoding='utf-8'))
     schema = json.loads((ROOT / 'data' / 'schema' / 'instrument.schema.json').read_text(encoding='utf-8'))
     Draft202012Validator.check_schema(schema)
@@ -67,6 +68,7 @@ def build() -> None:
         'home': ('/', 'Satellite signals can be jammed. Gravity can’t. | Gravimeters', 'An independent atlas of gravity measurement instruments and primary-source evidence; explore the limits of gravity-aided navigation.', 'og-home.jpg'),
         'instruments': ('/instruments/', 'Gravity instrument atlas | Gravimeters', 'Source-linked examples across relative, absolute and quantum gravimetry.', 'og-instruments.jpg'),
         'navigation': ('/navigation/', 'Gravity-aided navigation evidence | Gravimeters', 'Source-level evidence about GNSS-independent gravity-assisted navigation, including its limitations.', 'og-navigation.jpg'),
+        'evidence': ('/evidence/', 'Evidence intelligence | Gravimeters', 'Trace the scientific studies, instrument-model citations, sensing families and application boundaries behind gravity measurement.', 'og-navigation.jpg'),
         'acquisition': ('/acquisition/', 'Strategic acquisition and verifiable transfer | Gravimeters', 'Explore an independently maintained gravity-instrument reference asset and a transparent, optional third-party escrow transaction process.', 'og-acquisition.jpg'),
     }
     # A clean output prevents stale routes or social assets from being deployed.
@@ -78,7 +80,7 @@ def build() -> None:
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(template.render(page=key, route=route, title=title, description=description,
                                         canonical=CANONICAL + route, social_image=CANONICAL + '/assets/' + social_image,
-                                        links=links, instruments=instruments, evidence=evidence,
+                                        links=links, instruments=instruments, evidence=evidence, applications=applications,
                                         contact='agent@sohadot.com', year=date.today().year), encoding='utf-8')
     for path in (ROOT / 'static').rglob('*'):
         if path.is_file():
@@ -92,7 +94,7 @@ def build() -> None:
     (public_data / 'schema' / 'instrument.schema.json').write_text(
         json.dumps(schema, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     atlas = {
-        'dataset_version': '0.2.0',
+        'dataset_version': '0.3.0',
         'dataset_type': 'source_linked_editorial_index',
         'publisher': 'Gravimeters.com',
         'source_repository': 'https://github.com/Sohadot/Gravimeters',
@@ -102,6 +104,8 @@ def build() -> None:
         'taxonomy': taxonomy,
         'instruments': instruments,
         'navigation_evidence': evidence,
+        'applications': applications,
+        'evidence_relationships_note': 'An explicit linked_instruments entry means the paper names that instrument model. A sensing_families link is only a family-level association and never a model-level endorsement.',
     }
     (public_data / 'atlas.json').write_text(
         json.dumps(atlas, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')

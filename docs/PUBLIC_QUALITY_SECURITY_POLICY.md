@@ -34,3 +34,7 @@ GitHub **rulesets/branch protection** must require PR review and the `check` sta
 - GitHub Actions and Python dependencies are version-pinned; a future reproducible lockfile with hashes and independently reviewed advisory/secret scanning can further harden the supply chain.
 - Dependabot proposes dependency updates through PRs, but does not automatically approve or deploy them.
 - GitHub Pages releases are **manually initiated**, and Cloudflare remains a separate DNS/NS/security layer, never the authoritative site-build host.
+
+## Evidence Intelligence extension (v0.3)
+
+The public [evidence relationship methodology](EVIDENCE_RELATIONSHIP_METHOD.md) defines three **different** relationships: publication to application domain, publication to sensing family, and publication to a specifically **named instrument model**. Automated checks reject unknown relation IDs, missing source locations for model-level links, invalid evidence statuses, inconsistent source DOI metadata and unregistered application categories. These automated checks test declared **metadata and internal consistency only**; they do not determine whether a scientific paper actually supports a summarized result, whether a paper has been retracted, or whether a model's claimed performance has been independently verified.

@@ -78,12 +78,13 @@ def audit_data(root: Path) -> list[str]:
     data = root / "data"
     inst = json_file(data / "instruments.json", errors)
     evid = json_file(data / "evidence.json", errors)
+    apps = json_file(data / "applications.json", errors)
     tax = json_file(data / "taxonomy.json", errors)
     schema = json_file(data / "schema/instrument.schema.json", errors)
     links = json_file(data / "links.json", errors)
-    if any(x is None for x in (inst, evid, tax, schema, links)):
+    if any(x is None for x in (inst, evid, apps, tax, schema, links)):
         return errors
-    if not isinstance(inst, list) or not inst or not isinstance(evid, list) or not evid:
+    if not isinstance(inst, list) or not inst or not isinstance(evid, list) or not evid or not isinstance(apps, list) or not apps:
         return ["Instrument and evidence records must be nonempty lists"]
     if not isinstance(tax, dict) or not isinstance(schema, dict) or not isinstance(links, dict):
         return ["Taxonomy, schema and link manifest must be JSON objects"]
@@ -136,6 +137,19 @@ def audit_data(root: Path) -> list[str]:
         if not valid_date(item.get("reviewed_at")):
             errors.append(f"Instrument {key}: missing, invalid or future review date")
 
+    application_ids = set()
+    for app in apps:
+        if not isinstance(app, dict):
+            errors.append("Application record must be an object")
+            continue
+        key = app.get("id")
+        if not isinstance(key, str) or not ID.fullmatch(key) or key in application_ids:
+            errors.append(f"Invalid or duplicate application ID: {key}")
+        application_ids.add(key)
+        if any(not isinstance(app.get(field), str) or len(app[field].strip()) < 20
+               for field in ("title", "summary", "boundary")):
+            errors.append(f"Application {key}: missing or insufficient context and limitation")
+
     evidence_ids = set()
     required = ("id", "title", "source_type", "claim", "boundary", "published_at", "reviewed_at", "source_url")
     for item in evid:
@@ -161,6 +175,43 @@ def audit_data(root: Path) -> list[str]:
             errors.append(f"Evidence {key}: arXiv source must be explicitly labelled preprint")
         if "guaranteed" in item["claim"].lower() or "universal replacement" in item["claim"].lower():
             errors.append(f"Evidence {key}: unqualified absolute performance claim")
+        status = item.get("evidence_status")
+        if status not in {"preprint", "peer_reviewed_article"}:
+            errors.append(f"Evidence {key}: invalid explicit evidence status")
+        original_doi = item.get("source_doi")
+        if status == "preprint":
+            if "preprint" not in item["source_type"].lower() or original_doi is not None:
+                errors.append(f"Evidence {key}: preprint must be labelled and cannot claim journal source DOI")
+        if status == "peer_reviewed_article":
+            if "peer-reviewed" not in item["source_type"].lower():
+                errors.append(f"Evidence {key}: journal status requires peer-reviewed source label")
+            if not isinstance(original_doi, str) or not re.fullmatch(r"10\.\d{4,9}/[A-Za-z0-9._;()/:-]+", original_doi):
+                errors.append(f"Evidence {key}: journal status requires plausible original article DOI")
+            elif item["source_url"].startswith("https://www.nature.com/articles/") and item["source_url"].rstrip('/').split('/')[-1] != original_doi.split('/')[-1]:
+                errors.append(f"Evidence {key}: journal DOI does not match cited Nature article")
+        if not isinstance(item.get("application_ids"), list) or not item["application_ids"] or len(item["application_ids"]) != len(set(map(str, item["application_ids"]))):
+            errors.append(f"Evidence {key}: application links must be unique and nonempty")
+        elif any(app_id not in application_ids for app_id in item["application_ids"]):
+            errors.append(f"Evidence {key}: unknown application ID")
+        if not isinstance(item.get("sensing_families"), list) or not item["sensing_families"] or len(item["sensing_families"]) != len(set(map(str, item["sensing_families"]))):
+            errors.append(f"Evidence {key}: sensing links must be unique and nonempty")
+        elif any(family not in sensing for family in item["sensing_families"]):
+            errors.append(f"Evidence {key}: unknown sensing-family link")
+        links_to_models = item.get("linked_instruments")
+        if not isinstance(links_to_models, list):
+            errors.append(f"Evidence {key}: model relationships must be an explicit list (may be empty)")
+            continue
+        seen_models = set()
+        for link in links_to_models:
+            if not isinstance(link, dict) or set(link) != {"instrument_id", "relation", "source_section"}:
+                errors.append(f"Evidence {key}: model link needs instrument, relation and source location")
+                continue
+            model_id = link["instrument_id"]
+            if model_id not in ids or model_id in seen_models:
+                errors.append(f"Evidence {key}: unknown or duplicate explicitly identified instrument")
+            seen_models.add(model_id)
+            if link["relation"] != "model_explicitly_named_in_source" or not isinstance(link["source_section"], str) or len(link["source_section"].strip()) < 20:
+                errors.append(f"Evidence {key}: insufficient source evidence for model identification")
 
     expected = "https://github.com/Sohadot/Gravimeters"
     if links.get("github_repository_url") != expected:

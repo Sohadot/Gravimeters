@@ -8,6 +8,88 @@
     "published_at": "2026-08-26",
     "claim": "The authors report a maritime demonstration of gravity-map matching without GNSS observations in the evaluated navigation solution.",
     "boundary": "The result relies on a quantum gravimeter, reference gravity maps, inertial navigation and processing. It does not establish that a gravimeter alone can replace GNSS in general.",
-    "reviewed_at": "2026-11-21"
+    "reviewed_at": "2026-11-21",
+    "evidence_status": "preprint",
+    "source_doi": null,
+    "application_ids": [
+      "gnss-denied-navigation"
+    ],
+    "sensing_families": [
+      "cold_atom_interferometry"
+    ],
+    "linked_instruments": []
+  },
+  {
+    "id": "bidel-2018-marine-atom",
+    "title": "Marine absolute gravimetry using atom interferometry",
+    "source_type": "Peer-reviewed journal article",
+    "source_title": "Absolute marine gravimetry with matter-wave interferometry",
+    "source_url": "https://www.nature.com/articles/s41467-018-03040-2",
+    "published_at": "2018-02-12",
+    "claim": "The authors report a shipborne demonstration of absolute gravity measurement using matter-wave interferometry, addressing measurement constraints in a moving marine environment.",
+    "boundary": "The work establishes a demonstrated measurement approach under reported trial conditions, not a commercial model evaluation or a universal GNSS-free navigation capability.",
+    "reviewed_at": "2026-11-22",
+    "evidence_status": "peer_reviewed_article",
+    "source_doi": "10.1038/s41467-018-03040-2",
+    "application_ids": [
+      "marine-gravity-surveying"
+    ],
+    "sensing_families": [
+      "cold_atom_interferometry"
+    ],
+    "linked_instruments": []
+  },
+  {
+    "id": "shettell-2024-hybrid-survey",
+    "title": "Hybrid atomic and relative gravimetry in a field survey",
+    "source_type": "Peer-reviewed journal article",
+    "source_title": "Geophysical survey based on hybrid gravimetry using relative measurements and an atomic gravimeter as an absolute reference",
+    "source_url": "https://www.nature.com/articles/s41598-024-57253-1",
+    "published_at": "2024-03-18",
+    "claim": "A published field survey combined relative gravity measurements from a CG6 with an on-site atomic gravimeter serving as an absolute reference.",
+    "boundary": "This validates the reported hybrid survey configuration only. The atomic device is not assigned to any commercial instrument record without an explicit model-level identification.",
+    "reviewed_at": "2026-11-22",
+    "evidence_status": "peer_reviewed_article",
+    "source_doi": "10.1038/s41598-024-57253-1",
+    "application_ids": [
+      "hybrid-geophysical-surveys"
+    ],
+    "sensing_families": [
+      "quartz_sensor",
+      "cold_atom_interferometry"
+    ],
+    "linked_instruments": [
+      {
+        "instrument_id": "cg6",
+        "relation": "model_explicitly_named_in_source",
+        "source_section": "Methods and Fig. 1: Scintrex CG6 identified as the relative spring gravimeter"
+      }
+    ]
+  },
+  {
+    "id": "greco-2024-sicily-network",
+    "title": "Sicily absolute gravity and height reference network",
+    "source_type": "Peer-reviewed data article",
+    "source_title": "The first absolute gravity and height reference network in Sicily",
+    "source_url": "https://www.nature.com/articles/s41597-024-03177-4",
+    "published_at": "2024-04-08",
+    "claim": "A gravity and height reference network in Sicily used the named Scintrex CG-6 for measured gravity differences, vertical gradient work and transfers between stations.",
+    "boundary": "The article describes a specific reference network and its documented field procedure; its findings are not a blanket performance guarantee for every CG6 deployment.",
+    "reviewed_at": "2026-11-22",
+    "evidence_status": "peer_reviewed_article",
+    "source_doi": "10.1038/s41597-024-03177-4",
+    "application_ids": [
+      "geodetic-gravity-reference"
+    ],
+    "sensing_families": [
+      "quartz_sensor"
+    ],
+    "linked_instruments": [
+      {
+        "instrument_id": "cg6",
+        "relation": "model_explicitly_named_in_source",
+        "source_section": "Methods / Vertical gravity gradient measurements: Scintrex CG-6 named"
+      }
+    ]
   }
 ]
