@@ -40,5 +40,61 @@
     "reviewed_at": "2026-11-21",
     "measurement_type": "absolute",
     "sensing_family": "cold_atom_interferometry"
+  },
+  {
+    "id": "a10",
+    "model": "A10 Portable Absolute Gravity Meter",
+    "manufacturer": "Micro-g LaCoste",
+    "measurement": "Absolute",
+    "principle": "Free-fall optical interferometry",
+    "deployment": "Outdoor field / portable absolute surveys",
+    "description": "A portable absolute gravimeter designed for outdoor field acquisition. Manufacturer documentation lists a dropping canister, optical interferometer and field-oriented subsystems.",
+    "source_url": "https://microglacoste.com/product/a10-outdoor-absolute-gravimeter/",
+    "source_label": "Manufacturer product description",
+    "reviewed_at": "2026-11-22",
+    "measurement_type": "absolute",
+    "sensing_family": "free_fall_interferometry"
+  },
+  {
+    "id": "gphonex",
+    "model": "gPhoneX Gravity Meter",
+    "manufacturer": "Micro-g LaCoste",
+    "measurement": "Relative",
+    "principle": "Zero-length spring suspension",
+    "deployment": "Fixed-site / continuous gravity monitoring",
+    "description": "A zero-length-spring relative gravity meter designed for monitoring changing gravity signals over time, including earth tides and geophysical events.",
+    "source_url": "https://microglacoste.com/product/gphonex-gravimeter/",
+    "source_label": "Manufacturer product description",
+    "reviewed_at": "2026-11-22",
+    "measurement_type": "relative",
+    "sensing_family": "zero_length_spring"
+  },
+  {
+    "id": "igrav",
+    "model": "iGrav Superconducting Gravity Meter",
+    "manufacturer": "GWR Instruments",
+    "measurement": "Relative",
+    "principle": "Superconducting niobium-sphere suspension",
+    "deployment": "Transportable observatory / continuous monitoring",
+    "description": "A superconducting relative gravimeter providing continuous gravity-change records. Operation requires a cryogenic system; portability does not imply handheld surveys.",
+    "source_url": "https://www.gwrinstruments.com/igrav-gravity-sensors.html",
+    "source_label": "Manufacturer technical description",
+    "reviewed_at": "2026-11-22",
+    "measurement_type": "relative",
+    "sensing_family": "superconducting"
+  },
+  {
+    "id": "burris",
+    "model": "Burris Gravity Meter",
+    "manufacturer": "ZLS Corporation",
+    "measurement": "Relative",
+    "principle": "Metal zero-length spring",
+    "deployment": "Land survey / field station measurements",
+    "description": "A zero-length-spring relative land gravity meter offered in regional and geodetic configurations. Its application and measurement configuration depend on the selected variant.",
+    "source_url": "https://www.zlscorp.com/burris-gravity-meter",
+    "source_label": "Manufacturer product description",
+    "reviewed_at": "2026-11-22",
+    "measurement_type": "relative",
+    "sensing_family": "zero_length_spring"
   }
 ]

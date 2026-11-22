@@ -92,7 +92,7 @@ def build() -> None:
     (public_data / 'schema' / 'instrument.schema.json').write_text(
         json.dumps(schema, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     atlas = {
-        'dataset_version': '0.1.0',
+        'dataset_version': '0.2.0',
         'dataset_type': 'source_linked_editorial_index',
         'publisher': 'Gravimeters.com',
         'source_repository': 'https://github.com/Sohadot/Gravimeters',
