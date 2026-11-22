@@ -9,7 +9,9 @@
     "description": "A land gravity meter described by its manufacturer as using quartz sensor technology, with field mapping and post-processing support.",
     "source_url": "https://microglacoste.com/product/cg-6-autograv-gravity-meter/",
     "source_label": "Manufacturer product page",
-    "reviewed_at": "2026-11-21"
+    "reviewed_at": "2026-11-21",
+    "measurement_type": "relative",
+    "sensing_family": "quartz_sensor"
   },
   {
     "id": "fg5x",
@@ -21,7 +23,9 @@
     "description": "A free-fall absolute gravimeter with an interferometric measurement system, described in the manufacturer's technical documentation.",
     "source_url": "https://microglacoste.com/product/fg5-x-absolute-gravimeter/",
     "source_label": "Manufacturer product page",
-    "reviewed_at": "2026-11-21"
+    "reviewed_at": "2026-11-21",
+    "measurement_type": "absolute",
+    "sensing_family": "free_fall_interferometry"
   },
   {
     "id": "aqg",
@@ -33,6 +37,8 @@
     "description": "A family of absolute quantum gravimeters using cold atoms; operating configuration and application depend on the specific AQG variant.",
     "source_url": "https://www.exail.com/product/quantum-gravimeters",
     "source_label": "Manufacturer product-family page",
-    "reviewed_at": "2026-11-21"
+    "reviewed_at": "2026-11-21",
+    "measurement_type": "absolute",
+    "sensing_family": "cold_atom_interferometry"
   }
 ]

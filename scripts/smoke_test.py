@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Launch-critical offline checks, intentionally scoped to PR #1."""
+import json
 from html.parser import HTMLParser
 from pathlib import Path
 import sys
@@ -70,4 +71,14 @@ deploy = (Path(__file__).resolve().parents[1] / '.github/workflows/deploy-pages.
 assert 'workflow_dispatch:' in deploy and 'push:' not in deploy and 'pull_request:' not in deploy
 assert "github.ref == 'refs/heads/main'" in deploy
 assert 'path: dist' in deploy
-print('PR #1 smoke test passed (local static output only).')
+atlas = json.loads((OUT / 'data' / 'atlas.json').read_text(encoding='utf-8'))
+assert atlas['dataset_version'] == '0.1.0'
+assert len(atlas['instruments']) == 3 and len(atlas['navigation_evidence']) == 1
+assert {entry['id'] for entry in atlas['instruments']} == {'cg6', 'fg5x', 'aqg'}
+assert {entry['measurement_type'] for entry in atlas['instruments']} == {'relative', 'absolute'}
+assert all(entry['sensing_family'] in atlas['taxonomy']['facets']['sensing_family'] for entry in atlas['instruments'])
+assert (OUT / 'data' / 'schema' / 'instrument.schema.json').is_file()
+assert b'GRAVIMETERS_INTERNAL' not in (OUT / 'data' / 'atlas.json').read_bytes()
+instrument_page = (OUT / 'instruments' / 'index.html').read_text(encoding='utf-8')
+assert '/data/atlas.json' in instrument_page
+print('Static site and public atlas export tests passed.')

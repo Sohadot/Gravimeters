@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gravimeters.com/data/schema/instrument.schema.json",
+  "title": "Gravimeters.com source-linked instrument record v0.1",
+  "type": "object",
+  "required": [
+    "id",
+    "model",
+    "manufacturer",
+    "measurement",
+    "principle",
+    "deployment",
+    "description",
+    "source_url",
+    "source_label",
+    "reviewed_at",
+    "measurement_type",
+    "sensing_family"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,49}$"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 2
+    },
+    "manufacturer": {
+      "type": "string",
+      "minLength": 2
+    },
+    "measurement": {
+      "type": "string",
+      "enum": [
+        "Relative",
+        "Absolute"
+      ]
+    },
+    "principle": {
+      "type": "string",
+      "minLength": 3
+    },
+    "deployment": {
+      "type": "string",
+      "minLength": 4
+    },
+    "description": {
+      "type": "string",
+      "minLength": 25
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "source_label": {
+      "type": "string",
+      "minLength": 5
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "measurement_type": {
+      "type": "string",
+      "enum": [
+        "relative",
+        "absolute"
+      ]
+    },
+    "sensing_family": {
+      "type": "string",
+      "enum": [
+        "quartz_sensor",
+        "free_fall_interferometry",
+        "cold_atom_interferometry",
+        "superconducting"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
