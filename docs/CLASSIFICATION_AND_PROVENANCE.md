@@ -37,3 +37,7 @@ The public matrix compares only documented **instrument model**, **measurement m
 Initial public example records and their source references are attributable to the original manufacturers, not to any endorsement of this project. The four v0.2 records are: Micro-g LaCoste A10, Micro-g LaCoste gPhoneX, GWR iGrav, and ZLS Burris. Their published source links and editorial-review date appear in the JSON export.
 
 **Evidence association boundary:** A quantum gravimeter employed in an external navigation experiment is not presumed to be the Exail AQG (or any other listed commercial instrument). Evidence-to-model links require documented hardware identification and an explicit citation. A link to an instrument **class** does not establish product-level performance.
+
+## v0.3 — Evidence Intelligence layer (2026-11-22)
+
+Version 0.3 extends the public dataset to typed **applications → scientific sources → sensing families → explicitly named instrument models** relationships. The established absolute/relative and sensing-technology instrument categories remain unchanged. The evidence registry at `/evidence/` is separate from the `/navigation/` preprint-focused page. Explicit model-level references are restricted to papers that identify the exact model, while a family-level link is not an equipment endorsement. For source-specific limits and the distinction between original publication DOIs and an unissued project DOI, see [the evidence relationship methodology](EVIDENCE_RELATIONSHIP_METHOD.md).

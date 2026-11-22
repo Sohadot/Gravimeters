@@ -20,7 +20,7 @@ class GovernanceGateTests(unittest.TestCase):
         for name in ("data", ".github/workflows", "scripts"):
             (self.root / name).mkdir(parents=True, exist_ok=True)
         for path in (
-            "data/instruments.json", "data/evidence.json", "data/taxonomy.json",
+            "data/instruments.json", "data/evidence.json", "data/applications.json", "data/taxonomy.json",
             "data/schema/instrument.schema.json", "data/links.json",
             ".github/workflows/check.yml", ".github/workflows/deploy-pages.yml",
             "scripts/build.py",
@@ -92,6 +92,43 @@ class GovernanceGateTests(unittest.TestCase):
     def test_rejects_internal_export(self):
         (self.dist / "GRAVIMETERS_DECISIONS_LOG.md").write_text("Private strategy", encoding="utf-8")
         self.assertTrue(any("Private" in s for s in audit_files(self.root)))
+
+    def test_rejects_unknown_application_link(self):
+        records = self.load("data/evidence.json")
+        records[0]["application_ids"] = ["unverified-field"]
+        self.write("data/evidence.json", records)
+        self.assertTrue(any("unknown application" in s for s in audit_data(self.root)))
+
+    def test_rejects_unknown_sensor_family_link(self):
+        records = self.load("data/evidence.json")
+        records[0]["sensing_families"] = ["imaginary_device_type"]
+        self.write("data/evidence.json", records)
+        self.assertTrue(any("unknown sensing-family" in s for s in audit_data(self.root)))
+
+    def test_rejects_invented_model_link(self):
+        records = self.load("data/evidence.json")
+        records[0]["linked_instruments"] = [{"instrument_id":"aqg", "relation":"inferred", "source_section":"A model not actually identified by this study"}]
+        self.write("data/evidence.json", records)
+        self.assertTrue(any("insufficient source evidence" in s for s in audit_data(self.root)))
+
+    def test_rejects_unverified_model_id(self):
+        records = self.load("data/evidence.json")
+        records[0]["linked_instruments"] = [{"instrument_id":"nonexistent", "relation":"model_explicitly_named_in_source", "source_section":"Methods explicitly name a nonexistent device"}]
+        self.write("data/evidence.json", records)
+        self.assertTrue(any("unknown or duplicate explicitly" in s for s in audit_data(self.root)))
+
+    def test_rejects_mismatched_journal_doi(self):
+        records = self.load("data/evidence.json")
+        journal = next(x for x in records if x["evidence_status"] == "peer_reviewed_article")
+        journal["source_doi"] = "10.1038/s12345-999-99999-9"
+        self.write("data/evidence.json", records)
+        self.assertTrue(any("DOI does not match" in s for s in audit_data(self.root)))
+
+    def test_rejects_duplicate_application_id(self):
+        records = self.load("data/applications.json")
+        records.append(records[0].copy())
+        self.write("data/applications.json", records)
+        self.assertTrue(any("duplicate application" in s for s in audit_data(self.root)))
 
     def test_rejects_fake_peer_review_label(self):
         records = self.load("data/evidence.json")

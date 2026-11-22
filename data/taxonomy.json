@@ -1,5 +1,5 @@
 {
-  "taxonomy_version": "0.2.0",
+  "taxonomy_version": "0.3.0",
   "status": "Independent editorial classification; not a metrological standard, certification or performance ranking.",
   "scope": "Gravity-measurement instruments. Gravity gradiometers are related but distinct and are not automatically included.",
   "facets": {
@@ -30,5 +30,6 @@
   "reference_context_urls": [
     "https://bgi.obs-mip.fr/gravity-databases/",
     "https://bgi.obs-mip.fr/international-gravity-reference-frame/"
-  ]
+  ],
+  "version_note": "v0.3 adds evidence/application relationship vocabulary. Existing instrument measurement and sensing facets are unchanged."
 }
