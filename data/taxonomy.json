@@ -1,0 +1,33 @@
+{
+  "taxonomy_version": "0.1.0",
+  "status": "Independent editorial classification; not a metrological standard, certification or performance ranking.",
+  "scope": "Gravity-measurement instruments. Gravity gradiometers are related but distinct and are not automatically included.",
+  "facets": {
+    "measurement_type": {
+      "relative": "Reports gravity differences relative to a reference or across observation locations.",
+      "absolute": "Reports local gravity acceleration using the instrument stated absolute measurement method."
+    },
+    "sensing_family": {
+      "quartz_sensor": "Quartz-based relative sensing; specific design depends on the instrument.",
+      "free_fall_interferometry": "Free-fall interferometric absolute measurement.",
+      "cold_atom_interferometry": "Cold-atom interferometric gravity sensing.",
+      "superconducting": "Superconducting sensing; no representative device is present in the initial public dataset."
+    }
+  },
+  "distinctions": [
+    {
+      "class": "gravimeter",
+      "measures": "Gravity acceleration or relative gravity difference",
+      "included_in_atlas": true
+    },
+    {
+      "class": "gravity_gradiometer",
+      "measures": "Spatial gravity gradient",
+      "included_in_atlas": false
+    }
+  ],
+  "reference_context_urls": [
+    "https://bgi.obs-mip.fr/gravity-databases/",
+    "https://bgi.obs-mip.fr/international-gravity-reference-frame/"
+  ]
+}

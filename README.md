@@ -52,3 +52,7 @@ For confidential strategic inquiries and corrections, the owner-provided address
 ## Release controls
 
 Substantial navigation-evidence changes require separate editorial/owner review. Production releases remain deliberately owner-triggered; an accepted PR alone does not initiate deployment.
+
+## Machine-readable atlas and classification
+
+The atlas now exports a source-linked [versioned JSON catalog](https://gravimeters.com/data/atlas.json), together with an [instrument record JSON Schema](https://gravimeters.com/data/schema/instrument.schema.json) and [classification/provenance method](docs/CLASSIFICATION_AND_PROVENANCE.md). This is editorial indexing, not scientific certification or formal instrument qualification. Any future Zenodo DOI requires an actual published deposit.
