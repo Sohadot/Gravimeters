@@ -35,6 +35,48 @@ def load_records(name: str, required: set[str]) -> list[dict]:
     return records
 
 
+
+def structured_graph(key: str, route: str, title: str, description: str) -> str:
+    """Truthful, shared Schema.org nodes; no fabricated organization, reviews or DOI."""
+    canonical = CANONICAL + route
+    website_id = CANONICAL + '/#website'
+    graph = [
+        {'@type': 'WebSite', '@id': website_id, 'url': CANONICAL + '/',
+         'name': 'Gravimeters', 'description': 'Independent source-linked gravimeter and gravity research atlas',
+         'inLanguage': 'en'},
+        {'@type': 'CollectionPage' if key in ('instruments', 'evidence') else 'WebPage',
+         '@id': canonical + '#webpage', 'url': canonical, 'name': title,
+         'description': description, 'inLanguage': 'en',
+         'isPartOf': {'@id': website_id}},
+    ]
+    if route != '/':
+        breadcrumb_id = canonical + '#breadcrumb'
+        graph[1]['breadcrumb'] = {'@id': breadcrumb_id}
+        graph.append({
+            '@type': 'BreadcrumbList', '@id': breadcrumb_id,
+            'itemListElement': [
+                {'@type': 'ListItem', 'position': 1, 'name': 'Gravimeters', 'item': CANONICAL + '/'},
+                {'@type': 'ListItem', 'position': 2, 'name': title.split(' | ')[0], 'item': canonical},
+            ],
+        })
+    if key == 'evidence':
+        # This describes the actual public curated metadata export, NOT a primary dataset
+        # or independent equipment testing. Dataset schema targets Dataset Search only.
+        graph.append({
+            '@type': 'Dataset', '@id': canonical + '#editorial-dataset',
+            'name': 'Gravimeters.com source-linked instrument and evidence index',
+            'description': ('Editorial metadata on seven gravimeters, four published research records and '
+                            'four application domains, with original-source links and evidence limitations. '
+                            'Not independent calibration, certification or peer review.'),
+            'url': canonical, 'version': '0.3.0', 'inLanguage': 'en',
+            'isAccessibleForFree': True,
+            'distribution': {
+                '@type': 'DataDownload', 'encodingFormat': 'application/json',
+                'contentUrl': CANONICAL + '/data/atlas.json',
+            },
+        })
+    return json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('<', '\\u003c')
+
 def build() -> None:
     instruments = load_records('instruments.json', {'id', 'model', 'manufacturer', 'measurement', 'principle', 'description', 'source_url', 'reviewed_at'})
     evidence = load_records('evidence.json', {'id', 'title', 'source_type', 'source_url', 'claim', 'boundary', 'reviewed_at'})
@@ -64,22 +106,48 @@ def build() -> None:
         raise ValueError('Zenodo link must be null until a published verified record exists')
     env = Environment(loader=FileSystemLoader(ROOT / 'templates'), autoescape=select_autoescape(['html']))
     template = env.get_template('site.html')
-    pages = {
-        'home': ('/', 'Satellite signals can be jammed. Gravity can’t. | Gravimeters', 'An independent atlas of gravity measurement instruments and primary-source evidence; explore the limits of gravity-aided navigation.', 'og-home.jpg'),
-        'instruments': ('/instruments/', 'Gravity instrument atlas | Gravimeters', 'Source-linked examples across relative, absolute and quantum gravimetry.', 'og-instruments.jpg'),
-        'navigation': ('/navigation/', 'Gravity-aided navigation evidence | Gravimeters', 'Source-level evidence about GNSS-independent gravity-assisted navigation, including its limitations.', 'og-navigation.jpg'),
-        'evidence': ('/evidence/', 'Evidence intelligence | Gravimeters', 'Trace the scientific studies, instrument-model citations, sensing families and application boundaries behind gravity measurement.', 'og-navigation.jpg'),
-        'acquisition': ('/acquisition/', 'Strategic acquisition and verifiable transfer | Gravimeters', 'Explore an independently maintained gravity-instrument reference asset and a transparent, optional third-party escrow transaction process.', 'og-acquisition.jpg'),
-    }
+    seo_manifest = json.loads((ROOT / 'data' / 'seo_manifest.json').read_text(encoding='utf-8'))
+    records = seo_manifest.get('pages')
+    if not isinstance(records, list) or not records:
+        raise ValueError('SEO manifest must declare nonempty pages')
+    pages = {}
+    canonical_routes = set()
+    for item in records:
+        if not isinstance(item, dict) or set(item) != {'id', 'route', 'title', 'description', 'social_image', 'indexable'}:
+            raise ValueError('SEO page must contain exactly the approved metadata fields')
+        key, route = item['id'], item['route']
+        if key not in {'home', 'instruments', 'navigation', 'evidence', 'acquisition'}:
+            raise ValueError(f'Unapproved route identity: {key}')
+        if (not isinstance(route, str) or not route.startswith('/') or
+                not route.endswith('/') or '//' in route or '?' in route or '#' in route or
+                route != ('/' if key == 'home' else f'/{key}/')):
+            raise ValueError(f'Unapproved canonical route: {route}')
+        if key in pages or route in canonical_routes:
+            raise ValueError(f'Duplicate SEO page identity or route: {key} {route}')
+        if not isinstance(item['indexable'], bool):
+            raise ValueError(f'Indexability must be an explicit boolean for {key}')
+        for field in ('title', 'description', 'social_image'):
+            if not isinstance(item[field], str) or not item[field].strip():
+                raise ValueError(f'Empty SEO metadata {field} on {key}')
+        if not 24 <= len(item['title']) <= 85 or not 70 <= len(item['description']) <= 200:
+            raise ValueError(f'Unexpected SEO title/description length on {key}')
+        if not item['social_image'].startswith('og-') or not item['social_image'].endswith('.jpg'):
+            raise ValueError(f'Invalid social image reference on {key}')
+        pages[key] = (route, item['title'], item['description'], item['social_image'], item['indexable'])
+        canonical_routes.add(route)
+    if set(pages) != {'home', 'instruments', 'navigation', 'evidence', 'acquisition'}:
+        raise ValueError('Initial release routes must remain complete; new routes require a review')
     # A clean output prevents stale routes or social assets from being deployed.
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir(exist_ok=True)
-    for key, (route, title, description, social_image) in pages.items():
+    for key, (route, title, description, social_image, indexable) in pages.items():
         dest = OUT / route.strip('/') / 'index.html' if route != '/' else OUT / 'index.html'
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(template.render(page=key, route=route, title=title, description=description,
                                         canonical=CANONICAL + route, social_image=CANONICAL + '/assets/' + social_image,
+                                        robots_directive=('index,follow,max-image-preview:large' if indexable else 'noindex,follow'),
+                                        structured_data=structured_graph(key, route, title, description),
                                         links=links, instruments=instruments, evidence=evidence, applications=applications,
                                         contact='agent@sohadot.com', year=date.today().year), encoding='utf-8')
     for path in (ROOT / 'static').rglob('*'):
@@ -109,7 +177,7 @@ def build() -> None:
     }
     (public_data / 'atlas.json').write_text(
         json.dumps(atlas, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{CANONICAL}{route}</loc></url>' for route, _, _, _ in pages.values()) + '</urlset>\n', encoding='utf-8')
+    (OUT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + ''.join(f'<url><loc>{CANONICAL}{route}</loc></url>' for route, _, _, _, indexable in pages.values() if indexable) + '</urlset>\n', encoding='utf-8')
     print(f'Built {len(pages)} routes; {len(instruments)} instruments; {len(evidence)} evidence records.')
 
 

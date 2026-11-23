@@ -110,3 +110,9 @@ nav = (OUT / 'navigation' / 'index.html').read_text(encoding='utf-8')
 assert 'GNSS-free gravity-aided navigation in a maritime field trial' in nav
 assert 'Sicily absolute gravity and height reference network' not in nav
 print('Sprint 5 typed evidence graph and public registry checks passed.')
+
+# One SEO policy controls route metadata; fail closed for inconsistent public output.
+from seo_gate import audit as audit_seo
+seo_issues = audit_seo()
+assert not seo_issues, 'SEO release gate failed: ' + '; '.join(seo_issues)
+print('SEO release/indexability/structured-data gate passed.')

@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "description": "Single source of truth for public route metadata and search eligibility. No invented lastmod or rich-result guarantees.",
+  "pages": [
+    {
+      "id": "home",
+      "route": "/",
+      "title": "Gravimeters | Gravity Instrument Atlas & Navigation Evidence",
+      "description": "Explore source-linked gravimeters, gravity-measurement principles, and the published evidence and limitations of gravity-aided navigation.",
+      "social_image": "og-home.jpg",
+      "indexable": true
+    },
+    {
+      "id": "instruments",
+      "route": "/instruments/",
+      "title": "Gravimeter Instrument Atlas | Gravimeters",
+      "description": "Compare seven source-linked relative, absolute and quantum gravimeters by documented sensing principle, measurement mode and deployment context.",
+      "social_image": "og-instruments.jpg",
+      "indexable": true
+    },
+    {
+      "id": "navigation",
+      "route": "/navigation/",
+      "title": "Gravity-Aided Navigation: Evidence & Limits | Gravimeters",
+      "description": "Review published gravity-aided navigation experiments, GNSS-denied operating constraints, reference maps and limitations without commercial equipment claims.",
+      "social_image": "og-navigation.jpg",
+      "indexable": true
+    },
+    {
+      "id": "evidence",
+      "route": "/evidence/",
+      "title": "Gravity Research Evidence & Applications | Gravimeters",
+      "description": "Trace source-backed gravity studies across navigation, marine measurement, geodetic reference networks and hybrid surveys, with limitations and original DOIs.",
+      "social_image": "og-navigation.jpg",
+      "indexable": true
+    },
+    {
+      "id": "acquisition",
+      "route": "/acquisition/",
+      "title": "Gravimeters.com | Acquisition & Transfer Process",
+      "description": "Review the scope, public provenance and independently verifiable transfer process for the Gravimeters.com domain and associated original work.",
+      "social_image": "og-acquisition.jpg",
+      "indexable": true
+    }
+  ]
+}
