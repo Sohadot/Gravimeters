@@ -24,9 +24,9 @@ Use a coherent \`@graph\`: \`WebSite\` plus a page-level \`WebPage\` or \`Collec
 
 This is an **offline release-quality gate**, not a guarantee of indexing, CWV, ranking, external HTTP redirects, institutional trust or the scientific correctness of sources.
 
-## Search Console governance hold
+## Search Console operating boundary
 
-The domain property and five-URL sitemap were submitted and accepted on 2026-11-23. The asset owner expressly requested **no Search Console intervention for seven days, until 2026-11-30**. Do not change the property, resubmit the sitemap, request indexing, or claim index coverage during this hold. This document is **public** and deliberately excludes any internal owner account information, login details or commercial strategy; the holding date is recorded here only as an operational non-action constraint to prevent premature changes.
+The Search Console property and its indexation evidence are administered separately from this public source repository. No workflow here can submit, resubmit, inspect or change a Search Console property; these account actions require their own explicit authorization. Submission of a sitemap or discovery of a URL must never be represented as confirmed indexation. Owner-specific operating schedules and administrative decisions belong in the **private** governance register, not this public document.
 
 ## Performance and editorial growth gates
 
